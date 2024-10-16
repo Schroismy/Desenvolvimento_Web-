@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dados de Informações do Doador</title>
+</head>
+
+<body>
+  <h1>Dados de Informações do Doador</h1>
+  <h2>Dados de Informações</h2>
+  <form action="/action_page.php" method="get">
+    <label for="Nome">Nome:</label>
+    <input type="text" name="Nome"><br>
+    <label for="Usuário">Usuário:</label>
+    <input type="text" name="Usuário"><br>
+    <label for="Senha">Senha:</label>
+    <input type="password" name="Senha"><br>
+    <label for="E-mail">E-mail:</label>
+    <input type="text" name="E-mail" placeholder="tzirw@example.com"><br>
+    <label for="Telefone">Telefone:</label>
+    <input type="tel" name="Telefone" pattern="d{2}\-\d{8}" placeholder="51-99999999"><br>
+
+    <label for="dataNascimento">Data de Nascimento:</label>
+    <input type="date" id="dataNascimento" name="dataNascimento">
+    <label for="idade">Idade: <span id="idade">0</span> anos</label>
+
+    <script>
+      // Função para definir o valor máximo do campo de data
+      window.onload = function () {
+        const hoje = new Date().toISOString().split("T")[0];
+        document.getElementById("dataNascimento").setAttribute("max", hoje);
+      };
+
+      // Função para calcular a idade com base na data de nascimento
+      function calcularIdade(dataNascimento) {
+        const hoje = new Date();
+        const nascimento = new Date(dataNascimento);
+        let idade = hoje.getFullYear() - nascimento.getFullYear();
+        const mes = hoje.getMonth() - nascimento.getMonth();
+
+        // Verifica se o mês atual é antes do mês de nascimento
+        // ou se está no mês do aniversário, mas o dia ainda não chegou
+        if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+          idade--;
+        }
+
+        // Garante que a idade não seja negativa
+        if (idade < 0) {
+          idade = 0;
+        }
+
+        return idade;
+      }
+
+      // Event listener para atualizar a idade quando a data de nascimento é alterada
+      document.getElementById("dataNascimento").addEventListener("input", function () {
+        const dataNascimento = this.value;
+        const idade = calcularIdade(dataNascimento);
+        document.getElementById("idade").textContent = idade;
+      });
+    </script>
+
+    <br /><label for="Peso">Peso:</label>
+    <input type="number" name="Peso" id="peso" min="0">
+
+    <script>
+      // Event listener para evitar que o peso seja menor que zero
+      document.getElementById("peso").addEventListener("input", function () {
+        if (this.value < 0) {
+          this.value = 0; // Se o valor for negativo, define como 0
+        }
+      });
+    </script>
+
+    <br>
+
+    <label for="Fator RH">Fator RH:</label>
+    <select name="Fator RH">
+      <option value="" disable hidden selected>Escolha o seu Fator RH</option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+    </select><br>
+
+    <label for="tipo">Tipo sanguíneo:</label>
+    <select name="tipo">
+      <option value="" disable hidden selected>Escolha o seu tipo sanguíneo</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="AB">AB</option>
+      <option value="O">O</option>
+    </select><br>
+
+    <label for="Genero">Gênero:</label>
+    <input type="radio" value="masculino" name="Genero">Masculino</input>
+    <input type="radio" value="feminino" name="Genero">Feminino</input>
+    <input type="radio" value="outro" name="Genero">Outro</input><br>
+
+    <label for="Numero do documento">Numero do documento:</label>
+    <input type="text" name="Numero do documento"></br>
+
+    <fieldset>
+      <legend>Informações adicionais:</legend>
+      <input type="checkbox" name="frase_1" value="Bike">
+      <label for="frase_1">Estar descansado (ter dormido pelo menos 6 horas nas últimas 24 horas).</label>
+      <br>
+      <input type="checkbox" name="frase_2" value="Bike">
+      <label for="frase_2">Estar alimentado, evitando alimentos gordurosos.</label>
+      <br>
+      <input type="checkbox" name="frase_3" value="Bike">
+      <label for="frase_3">Não tem anemia no teste realizado imediatamente antes da doação.</label>
+      <br>
+      <input type="checkbox" name="frase_4" value="Bike">
+      <label for="frase_4">Não tem hipertensão ou hipotensão arterial no momento da doação.</label>
+      <br>
+      <input type="checkbox" name="frase_5" value="Bike">
+      <label for="frase_5">Não está com aumento ou diminuição dos batimentos cardíacos no momento da doação.</label>
+      <br>
+      <input type="checkbox" name="frase_6" value="Bike">
+      <label for="frase_6">Não está com febre no dia da doação.</label>
+      <br>
+    </fieldset>
+
+    <br />
+    <legend>Observações:</legend>
+    <textarea name="Observações" rows="15" cols="40"></textarea><br>
+    <input type="submit" value="Enviar">
+  </form>
+</body>
+
+</html>
